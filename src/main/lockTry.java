@@ -20,15 +20,15 @@ public class lockTry {
         private int localVar;
         Lock lock = new ReentrantLock();
 
-        public int getLocalVar() {
+        int getLocalVar() {
             return localVar;
         }
 
-        public void setLocalVar(int localVar) {
+        void setLocalVar(int localVar) {
             this.localVar = localVar;
         }
 
-        public void changeVar(){
+        void changeVar(){
             lock.lock();
             localVar++;
             lock.unlock();
