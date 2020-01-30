@@ -2,11 +2,19 @@ package main.dotaSearchAlgorithm;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class Queue {
+public class Queue extends Thread{
     private int queueId;
     private String mmrRange;
 //    private new PriorityQueue<Players> playersPriorityQueue;
+
+
+    public Queue(String mmrRange) {
+        this.mmrRange = mmrRange;
+    }
 
     private ArrayList<Players> playersPriorityQueue = new ArrayList<>();
 
@@ -42,6 +50,8 @@ public class Queue {
 
     public void addPlayerToQueue(Players players) {
         playersPriorityQueue.add(players);
+        System.out.println(getMmrRange());
+        System.out.println(playersPriorityQueue.size());
     }
 
     public Players takeFromQueue(){
@@ -60,4 +70,18 @@ public class Queue {
         return afterDeleteList;
     }
 
+
+
+
+    @Override
+    public void run() {
+        GameFactory factory = new GameFactory();
+        System.out.println("Очередь " + getMmrRange() + " готова ");
+
+        
+
+        factory.createGame(2, getMmrRange(), deleteTenPPLForGame());
+
+
+    }
 }

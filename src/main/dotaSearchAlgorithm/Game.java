@@ -1,6 +1,10 @@
 package main.dotaSearchAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Game extends Thread {
     private int gameId;
@@ -41,6 +45,17 @@ public class Game extends Thread {
 
     @Override
     public void run() {
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+
+        lock.lock();
+        try {
+            condition.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        lock.unlock();
+
         System.out.println("Игра " + gameId + " началась");
     }
 }

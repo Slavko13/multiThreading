@@ -1,33 +1,81 @@
 package main.dotaSearchAlgorithm;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Dota2SearchAlgorithm {
+    static int gameID = 0;
+    static int playerID = 0;
+
     private static List<Game> gameList = Collections.synchronizedList(new ArrayList<>());
     private static Queue playersDivineQueue = new Queue(1, "DIVINE");
-    private static Queue playersLegendQueue = new Queue(1, "LEGEND");
-    private static Queue playersCrusaderQueue = new Queue(1, "CRUSADER");
-    private static Queue playersAncientQueue = new Queue(1, "ANCIENT");
-    private static Queue playersImmortalQueue = new Queue(1, "IMMORTAL");
+    private static Queue playersLegendQueue = new Queue(2, "LEGEND");
+    private static Queue playersCrusaderQueue = new Queue(3, "CRUSADER");
+    private static Queue playersAncientQueue = new Queue(4, "ANCIENT");
+    private static Queue playersImmortalQueue = new Queue(5, "IMMORTAL");
 
     public static void main(String[] args) {
-        PlayersFactory playersFactory = new PlayersFactory();
         GameFactory gameFactory = new GameFactory();
+        Scanner scanner = new Scanner(System.in);
+        playersAncientQueue.start();
+        playersLegendQueue.start();
+        playersCrusaderQueue.start();
+        playersImmortalQueue.start();
+        playersDivineQueue.start();
 
-        for(int i = 0; i < 14; i++) {
-            playersDivineQueue.addPlayerToQueue(showRandomPlayer(playersFactory, i));
-            if(playersDivineQueue.size() == 10) {
-              Game game = gameFactory.createGame(i, "DIVINE", playersDivineQueue.deleteTenPPLForGame());
-              gameList.add(game);
-            }
+
+        while (true) {
+//            playerID = playerID + 1;
+//            if (playersDivineQueue.size() == 10) {
+//                gameID = gameID + 1;
+//                Game game = gameFactory.createGame(gameID, "DIVINE", playersDivineQueue.deleteTenPPLForGame());
+//                gameList.add(game);
+//                String fromScanner = scanner.nextLine();
+//                whatDoUWantToDo(fromScanner);
+//            }
+            String fromScanner = scanner.nextLine();
+            whatDoUWantToDo(fromScanner);
         }
 
-        System.out.println(playersDivineQueue.size());
-        System.out.println(gameList.get(0).getPlayersArrayList().size());
 
+    }
+
+
+    public static void whatDoUWantToDo(String fromScanner) {
+        PlayersFactory playersFactory = new PlayersFactory();
+        switch (fromScanner) {
+            case "newPlayers":
+                Random random = new Random();
+
+                for (int i = 0; random.nextInt(10) > i; i++) {
+                    addToQueue(showRandomPlayer(playersFactory, playerID));
+                }
+
+                break;
+            case "gameList":
+                gameList.get(0).getPlayersArrayList().forEach(x-> System.out.println(x.getMmr()));
+                break;
+            default:
+                System.out.println("Вы ввели неверную команду");
+        }
+    }
+
+    public static void addToQueue(Players player) {
+        switch (player.getMmr()) {
+            case "DIVINE":
+                playersDivineQueue.addPlayerToQueue(player);
+                break;
+            case "IMMORTAL":
+                playersImmortalQueue.addPlayerToQueue(player);
+                break;
+            case "CRUSADER":
+                playersCrusaderQueue.addPlayerToQueue(player);
+                break;
+            case"LEGEND":
+                playersLegendQueue.addPlayerToQueue(player);
+                break;
+            case "ANCIENT":
+                playersAncientQueue.addPlayerToQueue(player);
+        }
     }
 
     public static Players showRandomPlayer(PlayersFactory factory, int playerId){
@@ -35,13 +83,11 @@ public class Dota2SearchAlgorithm {
         randomPlayer.setPlayerId(playerId);
         randomPlayer.start();
         return randomPlayer;
-
-
     }
 
     public static Players getRandomPlayer(PlayersFactory factory){
         Random random = new Random();
-        PlayersMMRType type = PlayersMMRType.values()[random.nextInt(PlayersMMRType.values().length)];
+        MMRType type = MMRType.values()[random.nextInt(MMRType.values().length)];
 
         return(factory.createNewPlayer(type));
     }

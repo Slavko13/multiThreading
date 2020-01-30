@@ -1,6 +1,6 @@
 package main.dotaSearchAlgorithm;
 
-public enum  PlayersMMRType {
+public enum MMRType {
     LEGEND,
     DIVINE,
     ANCIENT,

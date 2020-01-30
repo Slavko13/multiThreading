@@ -1,12 +1,7 @@
 package main.dotaSearchAlgorithm;
 
-import java.util.Random;
-
-import static main.dotaSearchAlgorithm.PlayersMMRType.ANCIENT;
-import static main.dotaSearchAlgorithm.PlayersMMRType.DIVINE;
-
 public class PlayersFactory {
-    public Players createNewPlayer(PlayersMMRType type) {
+    public Players createNewPlayer(MMRType type) {
         Players toReturn = null;
         switch (type) {
             case ANCIENT:
