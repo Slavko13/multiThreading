@@ -10,7 +10,9 @@ public class NikitaLoh {
     public static void main(String[] args) throws InterruptedException {
 
         List<Integer> numbersForTest = new ArrayList<>();
-        for (int i = 0; i < 10000000; i++) {
+        int N = 100;
+
+        for (int i = 0; i < N; i++) {
             numbersForTest.add(1 + (int) (Math.random() * 100));
 
         }

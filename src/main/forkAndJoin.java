@@ -14,16 +14,20 @@ public class forkAndJoin {
 
     public static void main(String[] args) throws InterruptedException {
 
-        List<Integer> numbersForTest = new ArrayList<>();
-        for (int i = 0; i < 10000000; i++) {
-            numbersForTest.add(1 + (int) (Math.random() * 100));
+        int N = 100000000;
 
+
+        List<Integer> numbersForTest = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            numbersForTest.add(1 + (int) (Math.random() * 100));
         }
 
         MyThread thread1 = new MyThread();
         MyThread thread2 = new MyThread();
         MyThread thread3 = new MyThread();
         MyThread thread4 = new MyThread();
+
         thread1.numbers = numbersForTest.subList(0, numbersForTest.size() / 4 -1);
         thread2.numbers = numbersForTest.subList(numbersForTest.size() / 4, numbersForTest.size() / 2 - 1);
         thread3.numbers = numbersForTest.subList(numbersForTest.size() / 2, numbersForTest.size() * 3 / 4 - 1 );
