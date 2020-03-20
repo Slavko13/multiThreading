@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class NikitaLoh {
+public class NikitaLaba1 {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -38,11 +38,13 @@ public class NikitaLoh {
         finalResult.addAll(thread3.endPoint);
         finalResult.addAll(thread4.endPoint);
 
+        List<Integer> finalResultRly  = finalResult.stream().sorted().collect(Collectors.toList());
+
         IntStream workTimeStream = IntStream.of(thread1.workTime, thread2.workTime, thread3.workTime, thread4.workTime);
 
         System.out.println("Кол-во чисел для теста: " + numbersForTest.size());
         System.out.println("Время выполнения при 4 потоках: " + workTimeStream.max().getAsInt() + " миллисекунд");
-        System.out.println("Итоговый результат:" + finalResult);
+
     }
 
     static class MyThread extends  Thread {
